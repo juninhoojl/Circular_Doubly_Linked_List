@@ -66,7 +66,6 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
         cabeca->first = first;
     }
     
-
     if (first->next != second && second->next != first){ // Nao sao vizinhos
         
         if(first->prev){

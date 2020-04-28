@@ -72,11 +72,9 @@ int main(int argc, const char * argv[]){
     
     show_node(search_node(lista2, 7)->next);
     
-    swap_nodes(lista2, search_node(lista2, 7), search_node(lista2, 8));
+    swap_nodes(lista2, search_node(lista2, 6), search_node(lista2, 8));
     show_list(lista2);
 
-
-//
     
     return 0;
 }
