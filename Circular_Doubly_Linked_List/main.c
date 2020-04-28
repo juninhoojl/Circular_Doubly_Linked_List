@@ -26,15 +26,12 @@ int main(int argc, const char * argv[]){
             insert_end(lista, new_node(aleatorios[i]));
             //printf("Valor = %d\n",aleatorios[i]);
     }
-    printf("lista");
-    show_list(lista);
 
+    show_list(lista);
     insert_end(lista, new_node(55));
     show_list(lista);
-    
     insert_after(lista, search_node(lista, 55), new_node(88));
     show_list(lista);
-    
     insert_after(lista, search_node(lista, 88), new_node(99));
     show_list(lista);
     
@@ -73,18 +70,11 @@ int main(int argc, const char * argv[]){
 
     
     
+    show_node(search_node(lista2, 7)->next);
     
-//    swap_nodes(lista, search_node(lista, 1), search_node(lista, 3));
-//    show_list(lista);
-//    swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
-//    show_list(lista);
-//    swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
-//    show_list(lista);
-//    swap_nodes(lista, search_node(lista, 0), search_node(lista, 2));
-//    show_list(lista);
-//    swap_nodes(lista, search_node(lista, 2), search_node(lista, 9));
-//    show_list(lista);
-//
+    swap_nodes(lista2, search_node(lista2, 7), search_node(lista2, 8));
+    show_list(lista2);
+
 
 //
     

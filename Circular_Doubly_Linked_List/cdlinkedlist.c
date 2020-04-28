@@ -9,7 +9,7 @@
 #include "cdlinkedlist.h"
 
 void show_node(node * no){
-    printf(" %d ", no->data);
+    printf("[%d] ", no->data);
     return;
 }
 
@@ -308,15 +308,16 @@ void show_list(hnode * cabeca){
 node * search_node(hnode * cabeca, int valor){
     
     struct Node * atual = cabeca->first;
-
-    while(atual && atual->data!=valor){
-        atual = atual->next;
+    if(atual){
+       do{
+           atual = atual->next;
+       }while(atual != cabeca->first && atual->data != valor);
     }
 
     if(atual){
         return atual;
     }
-    
+
     return NULL;
 }
 
@@ -325,7 +326,6 @@ void insert_sorting(hnode * cabeca, node * newnode){
     struct Node * atual = cabeca->first;
     
     // 1 primeiro maior -1 segundo maior 0 iguais
-    
     if(!atual || compare_node(atual, newnode) == 0 || compare_node(atual, newnode) == 1){
         // Se vazia ou menor insere no comeco
         insert_beggining(cabeca, newnode);
