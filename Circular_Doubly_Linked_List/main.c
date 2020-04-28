@@ -41,25 +41,25 @@ int main(int argc, const char * argv[]){
     insert_before(lista, search_node(lista, 88), new_node(555));
     show_list(lista);
     
-    insert_before(lista, search_node(lista, 5), new_node(777));
+    insert_before(lista, search_node(lista, 5), new_node(-777));
     show_list(lista);
 
-//
-    remove_node(lista, search_node(lista, 777));
+    remove_node(lista, node_min(lista));
     show_list(lista);
-    printf("Tamanho inicial = %d\n",lista->tam);
     
-    printf("NODES MAXMIN\n");
+    remove_node(lista, node_max(lista));
     show_list(lista);
-    show_node(node_max(lista));
-    show_node(node_min(lista));
+    
+    printf("Tamanho inicial = %d\n",lista->tam);
+
+    show_list(lista);
+    
     printf("\n--------\n");
     
     remove_all(lista);
     printf("Tamanho inicial = %d\n",lista->tam);
     show_list(lista);
 
-    
     initialize_list(lista);
     
     hnode * lista2 = new_list();

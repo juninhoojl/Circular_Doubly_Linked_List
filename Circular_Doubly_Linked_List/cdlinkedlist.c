@@ -21,18 +21,15 @@ node * node_min(hnode * cabeca){
     
     if(atual){ // Se nao estiver vazia
         do{
-            printf("%d ", compare_node(atual, atual->next));
-            if(compare_node(atual, atual->next)==-1){
-                printf("Menor");
-                min = atual;
+            if(compare_node(atual->next, min) == -1){
+                min = atual->next;
             }
             atual = atual->next;
         }while(atual != cabeca->first);
-
     }
-    
     return min;
 }
+
 
 node * node_max(hnode * cabeca){
     
@@ -41,13 +38,12 @@ node * node_max(hnode * cabeca){
     
     if(atual){ // Se nao estiver vazia
         do{
-            if(compare_node(atual->next, atual)){
+            if(compare_node(atual->next, max) == 1){
                 max = atual->next;
             }
             atual = atual->next;
         }while(atual != cabeca->first);
     }
-    
     return max;
 }
 
