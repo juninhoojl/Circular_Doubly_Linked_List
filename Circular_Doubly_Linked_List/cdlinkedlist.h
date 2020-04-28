@@ -38,7 +38,8 @@ void show_list(hnode * cabeca);
 node * node_min(hnode * cabeca);
 node * node_max(hnode * cabeca);
 void show_node(node * no);
-hnode * initialize_list(void);
+hnode * initialize_list(hnode * cabeca);
+hnode * new_list(void);
 // 1-Primeiro maior 0-Iguais 1-Segundo maior
 int compare_node(node * first, node * second);
 // Novo node

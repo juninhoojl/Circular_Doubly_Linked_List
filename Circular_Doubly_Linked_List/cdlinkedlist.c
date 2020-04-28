@@ -8,7 +8,6 @@
 
 #include "cdlinkedlist.h"
 
-
 void show_node(node * no){
     printf(" %d ", no->data);
     return;
@@ -20,25 +19,33 @@ node * node_min(hnode * cabeca){
     node * atual = cabeca->first;
     node * min = cabeca->first;
     
-    while(atual->next){
-        if(!compare_node(atual, atual->next)){
-            min = atual->next;
-        }
-        atual = atual->next;
+    if(atual){ // Se nao estiver vazia
+        do{
+            printf("%d ", compare_node(atual, atual->next));
+            if(compare_node(atual, atual->next)==-1){
+                printf("Menor");
+                min = atual;
+            }
+            atual = atual->next;
+        }while(atual != cabeca->first);
+
     }
     
     return min;
 }
+
 node * node_max(hnode * cabeca){
     
     node * atual = cabeca->first;
     node * max = cabeca->first;
     
-    while(atual->next){
-        if(compare_node(atual, atual->next)){
-            max = atual->next;
-        }
-        atual = atual->next;
+    if(atual){ // Se nao estiver vazia
+        do{
+            if(compare_node(atual->next, atual)){
+                max = atual->next;
+            }
+            atual = atual->next;
+        }while(atual != cabeca->first);
     }
     
     return max;
@@ -193,15 +200,19 @@ void remove_all(hnode * cabeca){
     struct Node * atual = cabeca->first;
     struct Node * aux = NULL;
     
-    while(atual){
-        aux = atual;
-        atual = atual->prev;
-        free(aux);
+    if(atual){ // Se estiver vazia
+        return;
     }
     
-    cabeca->first = NULL;
-    cabeca->last = NULL;
-    cabeca->tam = 0;
+    do{
+        show_node(atual);
+        aux = atual;
+        free(atual);
+        atual = aux->next;
+        
+    }while(atual != cabeca->first);
+    
+    initialize_list(cabeca);
     
     return;
 }
@@ -211,12 +222,8 @@ void remove_node(hnode * cabeca, node * nremove){
     if(cabeca->first == nremove){ // Se primeiro
         
         cabeca->first = nremove->next;
-        nremove->next->prev = NULL;
-        
-    }else if(cabeca->last == nremove){ // Se ultimo
-        
-        cabeca->last = nremove->prev;
-        nremove->prev->next = NULL;
+        cabeca->first->prev = nremove->prev;
+        nremove->prev->next = nremove->next;
         
     }else{
         
@@ -250,7 +257,6 @@ void insert_end(hnode * cabeca, node * newnode){
         
     }
     
-
     cabeca->tam+=1;
     
     return;
@@ -260,10 +266,7 @@ void insert_after(hnode * cabeca, node * anterior, node * newnode){
     
     if(!anterior->next){ // Se ultimo
         insert_end(cabeca,newnode);
-        
     }else{
-        //node * novo = new_node(valor);
-        //novo->data = valor;
         newnode->prev = anterior;
         newnode->next = anterior->next;
         anterior->next = newnode;
@@ -279,14 +282,11 @@ void insert_before(hnode * cabeca, node * proximo, node * newnode){
     if(cabeca->first == proximo){ // Se primeiro
         insert_beggining(cabeca, newnode);
     }else{
-        
         newnode->prev = proximo->prev;
         newnode->next = proximo;
         proximo->prev->next = newnode;
         proximo->prev = newnode;
-
         cabeca->tam+=1;
-        
     }
     
     return;
@@ -295,21 +295,16 @@ void insert_before(hnode * cabeca, node * proximo, node * newnode){
 void show_list(hnode * cabeca){
     
     struct Node * atual = cabeca->first;
+    
+    if(atual){ // Se estiver vazia
+        do{
+            show_node(atual);
+            atual = atual->next;
+        }while(atual != cabeca->first);
 
-    if(!atual){ // Se estiver vazia
-        return;
+        printf("\n");
     }
-    
-    do{
-        show_node(atual);
-        atual = atual->next;
-        
-    }while(atual != cabeca->first);
-    
-    atual = cabeca->last;
-    
-    printf("\n");
-    
+ 
     return;
 }
 
@@ -331,31 +326,34 @@ node * search_node(hnode * cabeca, int valor){
 
 void insert_sorting(hnode * cabeca, node * newnode){
     
-    // Caminha ate achar alg
     struct Node * atual = cabeca->first;
     
-    // 1 primeiro maior
-    // -1 segundo maior
-    // 0 iguais
-
+    // 1 primeiro maior -1 segundo maior 0 iguais
+    
     if(!atual || compare_node(atual, newnode) == 0 || compare_node(atual, newnode) == 1){
         // Se vazia ou menor insere no comeco
         insert_beggining(cabeca, newnode);
-        printf("Insere Inicio\n");
     }else{
-        while(atual->next!=NULL && compare_node(atual->next, newnode) == -1){
+        do{
             atual = atual->next;
-        }
-        insert_after(cabeca, atual, newnode);
+        }while(atual != cabeca->first && compare_node(atual, newnode) == -1);
+        insert_after(cabeca, atual->prev, newnode);
     }
     
     return;
 }
 
-hnode * initialize_list(void){
-    hnode * novo = (hnode *)malloc(sizeof(hnode));
-    novo->first = NULL;
-    novo->last = NULL;
-    novo->tam = 0;
-    return novo;
+hnode * new_list(void){
+    hnode * newlist = (hnode *)malloc(sizeof(hnode));
+    initialize_list(newlist);
+    return newlist;
+}
+
+hnode * initialize_list(hnode * cabeca){
+    
+    cabeca->first = NULL;
+    cabeca->last = NULL;
+    cabeca->tam = 0;
+    
+    return NULL;
 }
