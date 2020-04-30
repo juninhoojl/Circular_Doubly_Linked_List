@@ -68,14 +68,12 @@ int main(int argc, const char * argv[]){
     printf("\nLISTA ORDENADA\n");
     show_list(lista2);
 
+   
+    //show_node(search_node(lista2, 7)->next);
     
-    
-    show_node(search_node(lista2, 7)->next);
-    
-    swap_nodes(lista2, search_node(lista2, 6), search_node(lista2, 8));
+    swap_nodes(lista2, search_node(lista2, 0), search_node(lista2, 9));
     show_list(lista2);
 
-    
     return 0;
 }
 

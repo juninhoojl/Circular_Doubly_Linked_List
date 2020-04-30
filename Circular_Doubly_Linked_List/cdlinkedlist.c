@@ -13,7 +13,6 @@ void show_node(node * no){
     return;
 }
 
-
 node * node_min(hnode * cabeca){
     
     node * atual = cabeca->first;
@@ -54,77 +53,41 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
     node * aux3 = first->prev;
     node * aux4 = second->next;
 
-    if (!first->next){ // Ultimo
-        cabeca->last = second;
-    }else if (!first->prev){ // Primeiro
-        cabeca->first = second;
-    }
     
-    if (!second->next){ // Ultimo
-        cabeca->last = first;
-    }else if (!second->prev){ // Primeiro
+    if (cabeca->first == first){ // Primeiro era cabeca
+        cabeca->first = second;
+    }else if (cabeca->first == second){ // Segundo era cabeca
         cabeca->first = first;
     }
     
     if (first->next != second && second->next != first){ // Nao sao vizinhos
         
-        if(first->prev){
-            first->prev->next = second;
-        }
-        
-        if(first->next){
-            first->next->prev = second;
-        }
-        
-        if(second->next){
-            second->next->prev = first;
-        }
-
-        if(second->prev){
-            second->prev->next = first;
-        }
-        
         first->next = aux4;
         second->next = aux;
-        
         first->prev = aux2;
         second->prev = aux3;
         
     }else if(first->next == second){ //segundo é vizinho direito
-
-        if(first->prev){ // Se nao eh nulo
-            first->prev->next = second;
-        }
         
-        if(second->next){
-            second->next->prev = first;
-        }
-
+        printf("DIREITO\n");
+        
         second->next = first;
-        first->prev = second;
         second->prev = aux3;
+        aux3->next = second;
+        first->prev = second;
         first->next = aux4;
-        
+        aux4->prev = first;
         
     }else if(second->next == first){ // Segundo eh vizinho esquerdo
-     // se existe algum depois do primerio o anterior dele aponta para o segundo
-        
-        if(first->next){
-            first->next->prev = second;
-        }
-        
-        if(second->prev){
-            second->prev->next = first;
-        }
-        
+        printf("ESQUERDO\n");
         second->prev = first;
-        second->next = aux4;
-        first->prev = aux2;
+        second->next = aux3;
+        aux3->prev = second;
         first->next = second;
+        first->prev = aux4;
+        aux4->next = first;
         
     }
-    
-    
     
     return;
 }
