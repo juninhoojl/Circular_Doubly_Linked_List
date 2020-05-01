@@ -62,12 +62,18 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
     
     if (first->next != second && second->next != first){ // Nao sao vizinhos
         
+        printf("NAO VIZINHOS\n");
+        
         first->next = aux4;
         second->next = aux;
         first->prev = aux2;
         second->prev = aux3;
+        aux3->next = second;
+        aux2->next = first;
+        aux->prev = second;
+        aux4->prev = first;
         
-    }else if(first->next == second){ //segundo é vizinho direito
+    }else if(first->next == second){ //segundo é vizinho direito OK
         
         printf("DIREITO\n");
         
@@ -79,13 +85,15 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
         aux4->prev = first;
         
     }else if(second->next == first){ // Segundo eh vizinho esquerdo
+        
         printf("ESQUERDO\n");
+        
         second->prev = first;
-        second->next = aux3;
-        aux3->prev = second;
+        second->next = aux;
         first->next = second;
-        first->prev = aux4;
-        aux4->next = first;
+        first->prev = aux2;
+        aux2->next = first;
+        aux->prev = second;
         
     }
     
