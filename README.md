@@ -1,7 +1,7 @@
 # Circular Doubly Linked List (Implemented in C)
 by: [juninhoojl](http://github.com/juninhoojl)
 
-![circulardoublylinkedList](CircularDoublyLinkedList.png)
+![circulardoublylinkedList](circulardoublylinkedlist.png)
 
 ## Struct Node (node)
 ```c
