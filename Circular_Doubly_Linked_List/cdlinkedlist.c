@@ -13,87 +13,80 @@ void show_node(node * no){
     return;
 }
 
-node * node_min(hnode * cabeca){
+node * node_min(hnode * head){
     
-    node * atual = cabeca->first;
-    node * min = cabeca->first;
+    node * current = head->first;
+    node * min = head->first;
     
-    if(atual){ // Se nao estiver vazia
+    if(current){ // Se nao estiver vazia
         do{
-            if(compare_node(atual->next, min) == -1){
-                min = atual->next;
+            if(compare_node(current->next, min) == -1){
+                min = current->next;
             }
-            atual = atual->next;
-        }while(atual != cabeca->first);
+            current = current->next;
+        }while(current != head->first);
     }
     return min;
 }
 
 
-node * node_max(hnode * cabeca){
+node * node_max(hnode * head){
     
-    node * atual = cabeca->first;
-    node * max = cabeca->first;
+    node * current = head->first;
+    node * max = head->first;
     
-    if(atual){ // Se nao estiver vazia
+    if(current){ // Se nao estiver vazia
         do{
-            if(compare_node(atual->next, max) == 1){
-                max = atual->next;
+            if(compare_node(current->next, max) == 1){
+                max = current->next;
             }
-            atual = atual->next;
-        }while(atual != cabeca->first);
+            current = current->next;
+        }while(current != head->first);
     }
     return max;
 }
 
-void swap_nodes(hnode * cabeca, node * first, node * second){
+void swap_nodes(hnode * head, node * first, node * second){
 
-    node * aux = first->next;
-    node * aux2 = second->prev;
-    node * aux3 = first->prev;
-    node * aux4 = second->next;
+    node * fnext = first->next;
+    node * sprev = second->prev;
+    node * fprev = first->prev;
+    node * snext = second->next;
 
-    
-    if (cabeca->first == first){ // Primeiro era cabeca
-        cabeca->first = second;
-    }else if (cabeca->first == second){ // Segundo era cabeca
-        cabeca->first = first;
+    if (head->first == first){ // Primeiro era head
+        head->first = second;
+    }else if (head->first == second){ // Segundo era head
+        head->first = first;
     }
     
     if (first->next != second && second->next != first){ // Nao sao vizinhos
         
-        printf("NAO VIZINHOS\n");
-        
-        first->next = aux4;
-        second->next = aux;
-        first->prev = aux2;
-        second->prev = aux3;
-        aux3->next = second;
-        aux2->next = first;
-        aux->prev = second;
-        aux4->prev = first;
+        first->next = snext;
+        second->next = fnext;
+        first->prev = sprev;
+        second->prev = fprev;
+        fprev->next = second;
+        sprev->next = first;
+        fnext->prev = second;
+        snext->prev = first;
         
     }else if(first->next == second){ //segundo é vizinho direito OK
         
-        printf("DIREITO\n");
-        
         second->next = first;
-        second->prev = aux3;
-        aux3->next = second;
+        second->prev = fprev;
+        fprev->next = second;
         first->prev = second;
-        first->next = aux4;
-        aux4->prev = first;
+        first->next = snext;
+        snext->prev = first;
         
     }else if(second->next == first){ // Segundo eh vizinho esquerdo
         
-        printf("ESQUERDO\n");
-        
         second->prev = first;
-        second->next = aux;
+        second->next = fnext;
         first->next = second;
-        first->prev = aux2;
-        aux2->next = first;
-        aux->prev = second;
+        first->prev = sprev;
+        sprev->next = first;
+        fnext->prev = second;
         
     }
     
@@ -131,64 +124,64 @@ node * new_node(int valor){
 }
 
 
-void insert_beggining(hnode * cabeca, node * newnode){
+void insert_beggining(hnode * head, node * newnode){
 
     //node * novo = new_node(valor);
     //novo->data = valor;
-    newnode->next = cabeca->first;
+    newnode->next = head->first;
     
-    if(cabeca->first){
+    if(head->first){
         
-        node * last = cabeca->first->prev;
-        newnode->prev = cabeca->first->prev;
-        newnode->next = cabeca->first;
-        cabeca->first->prev = newnode;
+        node * last = head->first->prev;
+        newnode->prev = head->first->prev;
+        newnode->next = head->first;
+        head->first->prev = newnode;
         last->next = newnode;
-        cabeca->first = newnode;
+        head->first = newnode;
         
     }else{
         // Se vazia
-        //cabeca->last = newnode;
+        //head->last = newnode;
         newnode->next = newnode;
         newnode->prev = newnode;
     }
     
     
-    cabeca->first = newnode;
-    cabeca->tam+=1;
+    head->first = newnode;
+    head->size+=1;
     
     return;
 }
 
 
-void remove_all(hnode * cabeca){
+void remove_all(hnode * head){
     
-    struct Node * atual = cabeca->first;
+    struct Node * current = head->first;
     struct Node * aux = NULL;
     
-    if(atual){ // Se estiver vazia
+    if(current){ // Se estiver vazia
         return;
     }
     
     do{
-        show_node(atual);
-        aux = atual;
-        free(atual);
-        atual = aux->next;
+        show_node(current);
+        aux = current;
+        free(current);
+        current = aux->next;
         
-    }while(atual != cabeca->first);
+    }while(current != head->first);
     
-    initialize_list(cabeca);
+    initialize_list(head);
     
     return;
 }
 
-void remove_node(hnode * cabeca, node * nremove){
+void remove_node(hnode * head, node * nremove){
 
-    if(cabeca->first == nremove){ // Se primeiro
+    if(head->first == nremove){ // Se primeiro
         
-        cabeca->first = nremove->next;
-        cabeca->first->prev = nremove->prev;
+        head->first = nremove->next;
+        head->first->prev = nremove->prev;
         nremove->prev->next = nremove->next;
         
     }else{
@@ -200,73 +193,73 @@ void remove_node(hnode * cabeca, node * nremove){
     
     free(nremove);
     
-    cabeca->tam-=1;
+    head->size-=1;
     
     return;
 }
 
 
-void insert_end(hnode * cabeca, node * newnode){
+void insert_end(hnode * head, node * newnode){
     
-    if (!cabeca->first){ // Se esta vazia
+    if (!head->first){ // Se esta vazia
         
         newnode->next = newnode->prev = newnode;
-        cabeca->first = newnode;
+        head->first = newnode;
         
     }else { // Se nao esta vazia
 
-      node * last = cabeca->first->prev;
-      newnode->next = cabeca->first;
-      cabeca->first->prev = newnode;
+      node * last = head->first->prev;
+      newnode->next = head->first;
+      head->first->prev = newnode;
       newnode->prev = last;
       last->next = newnode;
         
     }
     
-    cabeca->tam+=1;
+    head->size+=1;
     
     return;
 }
 
-void insert_after(hnode * cabeca, node * anterior, node * newnode){
+void insert_after(hnode * head, node * anterior, node * newnode){
     
     if(!anterior->next){ // Se ultimo
-        insert_end(cabeca,newnode);
+        insert_end(head,newnode);
     }else{
         newnode->prev = anterior;
         newnode->next = anterior->next;
         anterior->next = newnode;
         newnode->next->prev = newnode;
-        cabeca->tam+=1;
+        head->size+=1;
     }
     
     return;
 }
 
-void insert_before(hnode * cabeca, node * proximo, node * newnode){
+void insert_before(hnode * head, node * proximo, node * newnode){
     
-    if(cabeca->first == proximo){ // Se primeiro
-        insert_beggining(cabeca, newnode);
+    if(head->first == proximo){ // Se primeiro
+        insert_beggining(head, newnode);
     }else{
         newnode->prev = proximo->prev;
         newnode->next = proximo;
         proximo->prev->next = newnode;
         proximo->prev = newnode;
-        cabeca->tam+=1;
+        head->size+=1;
     }
     
     return;
 }
 
-void show_list(hnode * cabeca){
+void show_list(hnode * head){
     
-    struct Node * atual = cabeca->first;
+    struct Node * current = head->first;
     
-    if(atual){ // Se estiver vazia
+    if(current){ // Se estiver vazia
         do{
-            show_node(atual);
-            atual = atual->next;
-        }while(atual != cabeca->first);
+            show_node(current);
+            current = current->next;
+        }while(current != head->first);
 
         printf("\n");
     }
@@ -275,35 +268,35 @@ void show_list(hnode * cabeca){
 }
 
 
-node * search_node(hnode * cabeca, int valor){
+node * search_node(hnode * head, int valor){
     
-    struct Node * atual = cabeca->first;
-    if(atual){
+    struct Node * current = head->first;
+    if(current){
        do{
-           atual = atual->next;
-       }while(atual != cabeca->first && atual->data != valor);
+           current = current->next;
+       }while(current != head->first && current->data != valor);
     }
 
-    if(atual){
-        return atual;
+    if(current){
+        return current;
     }
 
     return NULL;
 }
 
-void insert_sorting(hnode * cabeca, node * newnode){
+void insert_sorting(hnode * head, node * newnode){
     
-    struct Node * atual = cabeca->first;
+    struct Node * current = head->first;
     
     // 1 primeiro maior -1 segundo maior 0 iguais
-    if(!atual || compare_node(atual, newnode) == 0 || compare_node(atual, newnode) == 1){
+    if(!current || compare_node(current, newnode) == 0 || compare_node(current, newnode) == 1){
         // Se vazia ou menor insere no comeco
-        insert_beggining(cabeca, newnode);
+        insert_beggining(head, newnode);
     }else{
         do{
-            atual = atual->next;
-        }while(atual != cabeca->first && compare_node(atual, newnode) == -1);
-        insert_after(cabeca, atual->prev, newnode);
+            current = current->next;
+        }while(current != head->first && compare_node(current, newnode) == -1);
+        insert_after(head, current->prev, newnode);
     }
     
     return;
@@ -315,11 +308,11 @@ hnode * new_list(void){
     return newlist;
 }
 
-hnode * initialize_list(hnode * cabeca){
+hnode * initialize_list(hnode * head){
     
-    cabeca->first = NULL;
-    cabeca->last = NULL;
-    cabeca->tam = 0;
+    head->first = NULL;
+    head->size = 0;
     
     return NULL;
 }
+

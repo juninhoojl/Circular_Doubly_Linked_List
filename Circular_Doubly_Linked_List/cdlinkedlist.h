@@ -19,32 +19,32 @@ typedef struct Node {
 }node;
 
 typedef struct Hnode {
-    int tam;
+    int size;
     struct Node * first;
-    struct Node * last;
+
 }hnode;
 
 // Para ordenacao
 
-void insert_beggining(hnode * cabeca, node * newnode);
-void insert_end(hnode * cabeca, node * newnode);
-void insert_after(hnode * cabeca, node * anterior, node * newnode);
-void insert_before(hnode * cabeca, node * proximo, node * newnode);
-void insert_sorting(hnode * cabeca, node * newnode);
-void swap_nodes(hnode * cabeca, node * first, node * second);
-void remove_all(hnode * cabeca);
-void remove_node(hnode * cabeca, node * nremove);
-void show_list(hnode * cabeca);
-node * node_min(hnode * cabeca);
-node * node_max(hnode * cabeca);
+void insert_beggining(hnode * head, node * newnode);
+void insert_end(hnode * head, node * newnode);
+void insert_after(hnode * head, node * anterior, node * newnode);
+void insert_before(hnode * head, node * proximo, node * newnode);
+void insert_sorting(hnode * head, node * newnode);
+void swap_nodes(hnode * head, node * first, node * second);
+void remove_all(hnode * head);
+void remove_node(hnode * head, node * nremove);
+void show_list(hnode * head);
+node * node_min(hnode * head);
+node * node_max(hnode * head);
 void show_node(node * no);
-hnode * initialize_list(hnode * cabeca);
+hnode * initialize_list(hnode * head);
 hnode * new_list(void);
 // 1-Primeiro maior 0-Iguais 1-Segundo maior
 int compare_node(node * first, node * second);
 // Novo node
 node * new_node(int valor);
 // buca node
-node * search_node(hnode * cabeca, int valor);
+node * search_node(hnode * head, int valor);
 
 #endif /* cdlinkedlist_h */

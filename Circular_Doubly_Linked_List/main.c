@@ -12,69 +12,55 @@
 
 int main(int argc, const char * argv[]){
     
-    hnode * lista = new_list();
+    hnode * list1 = new_list();
     
-    printf("Tamanho inicial = %d\n",lista->tam);
+    printf("Initial size = %d\n",list1->size);
    
     int i = 0;
     
     int aleatorios[10]={5,7,1,2,9,4,3,6,8,0};
-    //int aleatorios2[10]={-5,3,16,-2,5,4,-33,6,87,0};
-    show_list(lista);
+    show_list(list1);
     
     for (i=0; i<10; i++){
-            insert_end(lista, new_node(aleatorios[i]));
+            insert_end(list1, new_node(aleatorios[i]));
             //printf("Valor = %d\n",aleatorios[i]);
     }
-
-    show_list(lista);
-    insert_end(lista, new_node(55));
-    show_list(lista);
-    insert_after(lista, search_node(lista, 55), new_node(88));
-    show_list(lista);
-    insert_after(lista, search_node(lista, 88), new_node(99));
-    show_list(lista);
     
-    insert_before(lista, search_node(lista, 88), new_node(555));
-    show_list(lista);
+    show_list(list1);
+    insert_end(list1, new_node(55));
+    show_list(list1);
+    insert_after(list1, search_node(list1, 55), new_node(88));
+    show_list(list1);
+    insert_after(list1, search_node(list1, 88), new_node(99));
+    show_list(list1);
+    insert_before(list1, search_node(list1, 88), new_node(555));
+    show_list(list1);
+    insert_before(list1, search_node(list1, 5), new_node(-777));
+    show_list(list1);
+    remove_node(list1, node_min(list1));
+    show_list(list1);
+    remove_node(list1, node_max(list1));
+    show_list(list1);
+    remove_all(list1);
+    show_list(list1);
+    initialize_list(list1);
     
-    insert_before(lista, search_node(lista, 5), new_node(-777));
-    show_list(lista);
-
-    remove_node(lista, node_min(lista));
-    show_list(lista);
+    free(list1);
     
-    remove_node(lista, node_max(lista));
-    show_list(lista);
-    
-    printf("Tamanho inicial = %d\n",lista->tam);
-
-    show_list(lista);
-    
-    printf("\n--------\n");
-    
-    remove_all(lista);
-    printf("Tamanho inicial = %d\n",lista->tam);
-    show_list(lista);
-
-    initialize_list(lista);
-    
-    hnode * lista2 = new_list();
+    hnode * list2 = new_list();
     
     for (i=0; i<10; i++){
-        insert_sorting(lista2, new_node(aleatorios[i]));
+        insert_sorting(list2, new_node(aleatorios[i]));
     }
     
-    printf("\nLISTA ORDENADA\n");
-    show_list(lista2);
-
-   
-    show_node(search_node(lista2, 7)->next);
-    
-    swap_nodes(lista2, search_node(lista2, 0), search_node(lista2, 9));
-    swap_nodes(lista2, search_node(lista2, 0), search_node(lista2, 9));
-    swap_nodes(lista2, search_node(lista2, 5), search_node(lista2, 4));
-    show_list(lista2);
+    show_list(list2);
+    show_node(search_node(list2, 7)->next);
+    swap_nodes(list2, search_node(list2, 0), search_node(list2, 9));
+    swap_nodes(list2, search_node(list2, 0), search_node(list2, 9));
+    swap_nodes(list2, search_node(list2, 5), search_node(list2, 4));
+    show_list(list2);
+    remove_all(list2);
+    free(list2);
 
     return 0;
 }
